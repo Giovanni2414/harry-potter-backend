@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { User } from './users/user.entity';
 
 @Module({
   imports: [AuthModule, UsersModule,
@@ -12,8 +14,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'postgres',
       password: 'mypassword',
       database: 'ecommerce',
-      entities: [],
+      entities: [User],
       synchronize: true,})
     ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
