@@ -3,7 +3,13 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  username: string;
 
   @Column()
   firstName: string;
@@ -12,8 +18,21 @@ export class User {
   lastName: string;
 
   @Column()
-  username: string;
+  phone: string;
+
+  @Column()
+  address: string;
 
   @Column()
   password: string;
+
+  constructor(email: string, username: string, firstName: string, lastName: string, phone: string, address: string, password: string) {
+    this.email = email;
+    this.username = username;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.phone = phone;
+    this.address = address;
+    this.password = password;
+  }
 }

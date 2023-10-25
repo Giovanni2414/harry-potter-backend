@@ -1,23 +1,51 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { JwtService } from '@nestjs/jwt';
+import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {UsersService} from '../users/users.service';
+import {JwtService} from '@nestjs/jwt';
+import {User} from "../users/user.entity";
+import {UserMapper} from "../users/user.mapper";
+import {ErrorCodes} from "../constants/ErrorConstants";
+import {LoginUser} from "./login-user.entity";
+import {encryptPassword, verifyPassword} from "../tools/encryptData";
 
 @Injectable()
 export class AuthService {
 
-  constructor(private usersService: UsersService,
-    private jwtService: JwtService) {}
-
-  async signIn(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOneByUsername(username);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+    constructor(private usersService: UsersService,
+                private jwtService: JwtService,
+                private userMapper: UserMapper) {
     }
-    const payload = { sub: user.id, username: user.username };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
 
-  }
-  
+    async signIn(loginUser: LoginUser): Promise<any> {
+        const user = await this.usersService.findOneByUsername(loginUser.username);
+        if (!verifyPassword(loginUser.password, user.password)) {
+            throw new UnauthorizedException();
+        }
+        const payload = {sub: user.id, username: user.username};
+        return {
+            access_token: await this.jwtService.signAsync(payload),
+        };
+
+    }
+
+    async createUser(user: User) {
+        try{
+            await this.usersService.findOneByEmail(user.email).then((res) => {
+                if (res!==null){
+                    throw new Error(ErrorCodes.EMAIL_ALREADY_USED)
+                }
+            })
+            await this.usersService.findOneByUsername(user.username).then((res)=>{
+                if (res!==null){
+                    throw new Error(ErrorCodes.USERNAME_NOT_AVAILABLE)
+                }
+            })
+            const userEncrypt = await encryptPassword(user)
+            const userSaved = await this.usersService.save(userEncrypt)
+            return this.userMapper.userToUserDTOto(userSaved)
+        }catch (e) {
+            console.log(e)
+            throw e
+        }
+    }
+
 }

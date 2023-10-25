@@ -22,7 +22,7 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findOneById(id: number): Promise<User | null> {
+  findOneById(id: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ id });
   }
 
@@ -32,7 +32,17 @@ export class UsersService {
     });
   }
 
-  async remove(id: number): Promise<void> {
+  findOneByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({
+      email: Like(`%${email}%`)
+    });
+  }
+
+  save(user: User) {
+    return this.usersRepository.save(user)
+  }
+
+  async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
 }
