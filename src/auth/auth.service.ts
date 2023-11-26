@@ -43,7 +43,6 @@ export class AuthService {
             const userSaved = await this.usersService.save(userEncrypt)
             return this.userMapper.userToUserDTOto(userSaved)
         }catch (e) {
-            console.log(e)
             throw e
         }
     }

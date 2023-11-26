@@ -5,7 +5,6 @@ import {CreateUserDto} from "../users/create-user.dto";
 import {UserMapper} from "../users/user.mapper";
 import {LoginUserDto} from "./login-user.dto";
 import {LoginUserMapper} from "./login-user.mapper";
-import {encryptPassword} from "../tools/encryptData";
 
 @Controller('auth')
 export class AuthController {
