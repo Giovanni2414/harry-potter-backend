@@ -20,9 +20,11 @@ export class AuthService {
         if (!verifyPassword(loginUser.password, user.password)) {
             throw new UnauthorizedException();
         }
-        const payload = {sub: user.id, username: user.username};
+        const payload = {user_id: user.id, username: user.username, role: user.role};
         return {
-            access_token: await this.jwtService.signAsync(payload),
+            access_token: await this.jwtService.signAsync(payload, {
+                expiresIn: 60*10
+            }),
         };
 
     }
@@ -40,6 +42,7 @@ export class AuthService {
                 }
             })
             const userEncrypt = await encryptPassword(user)
+            userEncrypt.role = 'client'
             const userSaved = await this.usersService.save(userEncrypt)
             return this.userMapper.userToUserDTOto(userSaved)
         }catch (e) {

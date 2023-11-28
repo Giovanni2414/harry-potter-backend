@@ -26,7 +26,10 @@ export class User {
   @Column()
   password: string;
 
-  constructor(email: string, username: string, firstName: string, lastName: string, phone: string, address: string, password: string) {
+  @Column()
+  role: string
+
+  constructor(email: string, username: string, firstName: string, lastName: string, phone: string, address: string, password: string, role: string) {
     this.email = email;
     this.username = username;
     this.firstName = firstName;
@@ -34,5 +37,6 @@ export class User {
     this.phone = phone;
     this.address = address;
     this.password = password;
+    this.role = role
   }
 }

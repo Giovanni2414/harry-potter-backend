@@ -1,4 +1,4 @@
-import {IsEmail, IsNotEmpty, IsString, Matches} from "class-validator";
+import {IsEmail, IsEmpty, IsNotEmpty, IsString, Matches} from "class-validator";
 
 export class CreateUserDto {
 
@@ -24,8 +24,11 @@ export class CreateUserDto {
     @Matches(/^(?=.*[A-Z])(?=.*[*#$%]).+$/, { message: 'La cadena debe contener al menos una letra mayúscula y uno de los siguientes caracteres: * # $ %' })
     readonly password: string;
 
+    @IsString()
+    readonly role: string;
 
-    constructor(email: string, username: string, firstName: string, lastName: string, phone: string, address: string, password: string) {
+
+    constructor(email: string, username: string, firstName: string, lastName: string, phone: string, address: string, password: string, role: string) {
         this.email = email;
         this.username = username;
         this.firstName = firstName;
@@ -33,5 +36,6 @@ export class CreateUserDto {
         this.phone = phone;
         this.address = address;
         this.password = password;
+        this.role = role
     }
 }
