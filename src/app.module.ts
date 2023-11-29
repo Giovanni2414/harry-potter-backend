@@ -10,6 +10,8 @@ import {Brand} from "./brands/brand.entity";
 import {Review} from "./reviews/review.entity";
 import {BrandModule} from "./brands/brand.module";
 import {ReviewModule} from "./reviews/review.module";
+import {Checkout} from "./checkouts/checkout.entity";
+import {CheckoutModule} from "./checkouts/checkout.module";
 import {AuthMiddleware} from "./middleware/auth.middleware";
 import {BrandController} from "./brands/brand.controller";
 import {ProductController} from "./products/product.controller";
@@ -21,16 +23,17 @@ import {AdminMiddleware} from "./middleware/admin.middleware";
         ProductModule,
         BrandModule,
         ReviewModule,
+        CheckoutModule,
         TypeOrmModule.forRoot({
             type: 'postgres',
             host: 'localhost',
             port: 5432,
-            username: 'postgres',
-            password: 'mypassword',
+            username: 'admin',
+            password: 'admin',
             database: 'ecommerce',
-            entities: [User, Brand, Product, Review],
+            entities: [User, Brand, Product, Review, Checkout],
             synchronize: false,
-        }),
+        })
     ],
 })
 export class AppModule implements NestModule {
