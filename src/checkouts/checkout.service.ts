@@ -18,7 +18,6 @@ export class CheckoutService {
     }
 
     async create(createCheckoutDto: CreateCheckoutDto): Promise<CreateCheckoutDto> {
-        console.log(createCheckoutDto)
         const newCheckout = this.checkoutRepository.create(createCheckoutDto);
         const savedCheckout = await this.checkoutRepository.save(newCheckout);
         const paymentIntent = await stripe.paymentIntents.create({
@@ -28,8 +27,6 @@ export class CheckoutService {
                 enabled: true,
             },
         });
-
-        console.log(savedCheckout)
 
         const responseCheckout = new CreateCheckoutDto()
 

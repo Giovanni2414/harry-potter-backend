@@ -15,7 +15,6 @@ import {CheckoutModule} from "./checkouts/checkout.module";
 import {AuthMiddleware} from "./middleware/auth.middleware";
 import {BrandController} from "./brands/brand.controller";
 import {AdminMiddleware} from "./middleware/admin.middleware";
-import {UserController} from "./users/user.controller";
 
 @Module({
     imports: [AuthModule,
@@ -28,8 +27,8 @@ import {UserController} from "./users/user.controller";
             type: 'postgres',
             host: 'localhost',
             port: 5432,
-            username: 'postgres',
-            password: 'mypassword',
+            username: 'admin',
+            password: 'admin',
             database: 'ecommerce',
             entities: [User, Brand, Product, Review, Checkout],
             synchronize: false,
@@ -43,6 +42,9 @@ export class AppModule implements NestModule {
             {path: "products", method: RequestMethod.PUT},
             {path: "products/*", method: RequestMethod.DELETE},
             {path: "products/*", method: RequestMethod.POST},
+            {path:"brands/*", method:RequestMethod.PUT},
+            {path:"brands/*", method:RequestMethod.DELETE},
+            {path:"brands/*", method:RequestMethod.POST},
             BrandController,
             {path: "reviews/*", method: RequestMethod.PUT},
             {path: "reviews/*", method: RequestMethod.DELETE},

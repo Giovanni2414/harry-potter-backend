@@ -41,7 +41,7 @@ export class BrandController {
     async update(@Param('id') id: string, @Body() updateBrandDto: CreateBrandDto, @Res() response) {
         try{
             const updatedBrand: CreateBrandDto = await this.brandService.update(+id, updateBrandDto);
-            response.status(HttpStatus.BAD_REQUEST).send(updatedBrand)
+            response.status(HttpStatus.OK).send(updatedBrand)
         }catch (e){
             response.status(HttpStatus.BAD_REQUEST).send(e.message)
         }
