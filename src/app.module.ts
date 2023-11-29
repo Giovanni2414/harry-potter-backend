@@ -15,6 +15,7 @@ import {CheckoutModule} from "./checkouts/checkout.module";
 import {AuthMiddleware} from "./middleware/auth.middleware";
 import {BrandController} from "./brands/brand.controller";
 import {AdminMiddleware} from "./middleware/admin.middleware";
+import {UserController} from "./users/user.controller";
 
 @Module({
     imports: [AuthModule,
@@ -27,8 +28,8 @@ import {AdminMiddleware} from "./middleware/admin.middleware";
             type: 'postgres',
             host: 'localhost',
             port: 5432,
-            username: 'admin',
-            password: 'admin',
+            username: 'postgres',
+            password: 'mypassword',
             database: 'ecommerce',
             entities: [User, Brand, Product, Review, Checkout],
             synchronize: false,
@@ -40,11 +41,13 @@ export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer.apply(AdminMiddleware).forRoutes(
             {path: "products", method: RequestMethod.PUT},
-            {path: "products", method: RequestMethod.DELETE},
-            {path: "products", method: RequestMethod.POST},
+            {path: "products/*", method: RequestMethod.DELETE},
+            {path: "products/*", method: RequestMethod.POST},
             BrandController,
-            {path: "reviews", method: RequestMethod.PUT},
-            {path: "reviews", method: RequestMethod.DELETE},
+            {path: "reviews/*", method: RequestMethod.PUT},
+            {path: "reviews/*", method: RequestMethod.DELETE},
+            {path: "users/*", method: RequestMethod.PUT},
+            {path: "users/*", method: RequestMethod.DELETE}
         )
         consumer.apply(AuthMiddleware).forRoutes(
             {path: "reviews", method: RequestMethod.POST},

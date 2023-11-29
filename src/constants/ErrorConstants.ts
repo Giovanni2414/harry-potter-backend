@@ -5,5 +5,6 @@ export enum ErrorCodes {
     PRODUCT_NOT_FOUND = 'The product you are looking for was not found',
     EXISTING_BRAND = 'The brand you are trying to create already exists in the database.',
     BRAND_NOT_FOUND = 'The brand you are looking for was not found',
-    REVIEW_NOT_FOUND = 'The review you are looking for was not found'
+    REVIEW_NOT_FOUND = 'The review you are looking for was not found',
+    USER_NOT_FOUND = 'The user you are looking for was not found'
 }

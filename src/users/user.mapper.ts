@@ -1,14 +1,17 @@
 import {CreateUserDto} from "./create-user.dto";
 import {User} from "./user.entity";
+import {Injectable} from "@nestjs/common";
+import {plainToClass} from "class-transformer";
 
+@Injectable()
 export class UserMapper{
 
-    userDTOToUser(userDTO: CreateUserDto){
-        return new User(userDTO.email, userDTO.username,  userDTO.firstName, userDTO.lastName, userDTO.phone, userDTO.address, userDTO.password, userDTO.role)
+    userDTOToUser(userDTO: CreateUserDto): User{
+        return plainToClass(User, userDTO)
     }
 
     userToUserDTOto(user : User){
-        return new CreateUserDto(user.email, user.username, user.firstName, user.lastName, user.phone, user.address, user.password, user.role)
+        return plainToClass(CreateUserDto, user)
     }
 
 }
