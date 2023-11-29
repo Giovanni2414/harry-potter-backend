@@ -20,7 +20,7 @@ export class AuthService {
         if (!verifyPassword(loginUser.password, user.password)) {
             throw new UnauthorizedException();
         }
-        const payload = {user_id: user.id, username: user.username, role: user.role};
+        const payload = {user_id: user.user_id, username: user.username, role: user.role};
         return {
             access_token: await this.jwtService.signAsync(payload, {
                 expiresIn: 60*10
