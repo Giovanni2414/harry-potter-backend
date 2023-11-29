@@ -12,7 +12,6 @@ import {BrandModule} from "./brands/brand.module";
 import {ReviewModule} from "./reviews/review.module";
 import {AuthMiddleware} from "./middleware/auth.middleware";
 import {BrandController} from "./brands/brand.controller";
-import {ProductController} from "./products/product.controller";
 import {AdminMiddleware} from "./middleware/admin.middleware";
 
 @Module({

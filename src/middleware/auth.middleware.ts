@@ -27,6 +27,7 @@ export class AuthMiddleware implements NestMiddleware {
             }catch {
                 throw new UnauthorizedException();
             }
+            console.log(decoded)
             if(decoded.role !== "client")
                 return res.status(401).json({message: "Role not Authorized"})
             next()
