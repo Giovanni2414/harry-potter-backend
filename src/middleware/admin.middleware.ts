@@ -25,7 +25,7 @@ export class AdminMiddleware implements NestMiddleware {
                     }
                 )
             }catch {
-                throw new UnauthorizedException();
+                return res.status(401).json({message: "Token expired"})
             }
             if(decoded.role !== "superadmin")
                 return res.status(401).json({message: "Role not Authorized"})
