@@ -48,6 +48,7 @@ export class AppModule implements NestModule {
             BrandController,
             {path: "reviews/*", method: RequestMethod.PUT},
             {path: "reviews/*", method: RequestMethod.DELETE},
+            {path: "users", method: RequestMethod.GET},
             {path: "users/*", method: RequestMethod.PUT},
             {path: "users/*", method: RequestMethod.DELETE}
         )

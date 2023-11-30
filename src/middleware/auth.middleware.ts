@@ -25,7 +25,7 @@ export class AuthMiddleware implements NestMiddleware {
                     }
                 )
             }catch {
-                throw new UnauthorizedException();
+                return res.status(401).json({message: "Token expired"})
             }
             console.log(decoded)
             if(decoded.role !== "client")
