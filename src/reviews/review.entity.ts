@@ -4,6 +4,7 @@ import {Product} from "../products/product.entity";
 
 @Entity('reviews')
 export class Review {
+
     @PrimaryGeneratedColumn()
     review_id: number;
 
@@ -19,8 +20,11 @@ export class Review {
     @Column({ type: 'float' })
     stars: number;
 
+    @Column()
+    review_date: Date;
+
     @ManyToOne(() => User, { eager: true })
-    @JoinColumn({ name: 'id' })
+    @JoinColumn({ name: 'user_id' })
     user: User;
 
     @ManyToOne(() => Product, { eager: true })

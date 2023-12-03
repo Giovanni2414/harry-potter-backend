@@ -57,4 +57,14 @@ export class ReviewController {
             response.status(HttpStatus.BAD_REQUEST).send(e.message)
         }
     }
+
+    @Get("product/:id")
+    async findProductReview(@Param('id') id: string, @Res() response){
+        try{
+            const reviews: CreateReviewDto[] = await this.reviewService.findProductReview(+id)
+            response.status(HttpStatus.OK).send(reviews)
+        }catch (e) {
+            response.status(HttpStatus.BAD_REQUEST).send(e.message)
+        }
+    }
 }

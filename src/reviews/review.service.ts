@@ -26,7 +26,7 @@ export class ReviewService {
 
     async findAll(): Promise<CreateReviewDto[]> {
         try{
-            const reviews = await this.reviewRepository.find();
+            const reviews: Review[] = await this.reviewRepository.find();
             return reviews.map(review => this.reviewMapper.mapToDto(review));
         } catch (e){
             throw e
@@ -61,6 +61,23 @@ export class ReviewService {
         try{
             await this.findOneById(id)
             await this.reviewRepository.delete(id);
+        } catch (e){
+            throw e
+        }
+    }
+
+    async findProductReview(id: number): Promise<CreateReviewDto[]>{
+        try{
+            const reviews: Review[] = await this.reviewRepository.find({
+                where: {
+                    product_id: id
+                }
+            });
+            if(reviews!==null){
+                return reviews.map(review => this.reviewMapper.mapToDto(review));
+            }else{
+                throw new Error(ErrorCodes.REVIEW_NOT_FOUND)
+            }
         } catch (e){
             throw e
         }

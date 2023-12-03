@@ -18,4 +18,8 @@ export class CreateReviewDto {
     @IsNumber()
     stars: number;
 
+    @IsNotEmpty()
+    @IsString()
+    review_date: string
+
 }
